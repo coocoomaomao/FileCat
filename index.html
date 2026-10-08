@@ -10,7 +10,7 @@
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div class="brand"><div class="brand-icon">🐈‍⬛</div><div><b>FileCat</b><span>文件整理猫 · 喵造实验室 009</span></div></div>
+      <div class="brand"><div class="brand-icon">🐈‍⬛</div><div><b>FileCat</b><span>文件整理猫 · 喵造实验室 009 · v0.2</span></div></div>
       <div class="safety-badge">不删除 · 先预览 · 可撤销</div>
     </header>
 
@@ -19,7 +19,7 @@
         <div class="hero-copy">
           <span class="eyebrow">LOCAL-FIRST FILE ORGANIZER</span>
           <h1>受够了“最终版2最终版”？<br><em>让猫帮你收拾。</em></h1>
-          <p>FileCat 只整理你主动选择的文件夹。v0.1 不进入已有子文件夹、不永久删除文件，所有移动都先给你看，执行后还能一键撤销。</p>
+          <p>v0.2 开始会“看懂一点文件”：结合文件名、类型、修改时间和少量可安全读取的文本内容，判断它更像学术资料、合同、财务、设计素材还是普通文档。依然先预览、再整理、可撤销。</p>
           <div class="hero-actions">
             <button class="primary" id="chooseBtn">选择文件夹开始扫描</button>
             <button class="ghost" id="undoBtn">撤销上一次整理</button>
@@ -38,7 +38,7 @@
         <div class="drop-zone" id="dropZone">
           <div class="drop-icon">📂</div>
           <b id="folderTitle">推荐先从「下载」或「桌面」开始</b>
-          <span>FileCat v0.1 只扫描当前目录的文件，不碰里面已有的文件夹。</span>
+          <span>FileCat v0.2 只扫描当前目录的文件，不碰已有子文件夹；文本抽样只在本机进行，不上传。</span>
         </div>
       </section>
 
@@ -48,10 +48,22 @@
           <article><small>总大小</small><strong id="statSize">0</strong><span></span></article>
           <article><small>重复文件组</small><strong id="statDup">0</strong><span>组</span></article>
           <article><small>“最终版”家族</small><strong id="statVersions">0</strong><span>组</span></article>
+          <article><small>超过 1 年</small><strong id="statOld">0</strong><span>个</span></article>
+          <article><small>大文件 ≥500MB</small><strong id="statLarge">0</strong><span>个</span></article>
         </div>
+
+        <section class="panel insight-panel">
+          <div class="section-head"><div><small>V0.2 INSIGHTS</small><h2>FileCat 清理观察</h2></div><span id="insightBadge">本地分析</span></div>
+          <div id="insightList" class="insight-list"></div>
+        </section>
 
         <section class="panel">
           <div class="section-head"><div><small>STEP 02</small><h2>FileCat 的整理建议</h2></div><span>默认全部勾选，可修改</span></div>
+          <div class="mode-switch" role="group" aria-label="整理模式">
+            <button class="mode-btn active" id="smartModeBtn">智能用途分类</button>
+            <button class="mode-btn" id="typeModeBtn">传统文件类型</button>
+          </div>
+          <p class="mode-desc" id="modeDesc">根据文件名、扩展名、时间和少量本地文本抽样，优先整理成“学术科研 / 合同资料 / 公司财务 / 图片素材”等用途目录。</p>
           <div id="categoryList" class="category-list"></div>
         </section>
 
@@ -68,7 +80,7 @@
 
         <section class="panel plan-panel">
           <div class="section-head"><div><small>STEP 03</small><h2>执行前预览</h2></div><span id="planCount">0 个文件</span></div>
-          <div class="plan-note">将创建 <b>FileCat_整理</b> 文件夹，再按类型放进 PDF / 文档 / 图片 / 视频等子目录。原有文件夹完全不动。</div>
+          <div class="plan-note">将创建 <b>FileCat_整理</b> 文件夹，并按当前选择的整理模式创建子目录。原有文件夹完全不动。</div>
           <div id="planPreview" class="plan-preview"></div>
           <button class="primary wide" id="executeBtn">确认整理这些文件</button>
         </section>
