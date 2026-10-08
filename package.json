@@ -1,0 +1,51 @@
+{
+  "name": "filecat-desktop",
+  "version": "0.1.0",
+  "description": "FileCat 文件整理猫 - safe local-first desktop file organizer",
+  "author": "MeowBuild Lab",
+  "license": "MIT",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/core.test.cjs",
+    "check": "node --check app.js && node --check electron/main.cjs && node --check electron/preload.cjs && node --check electron/filecat-core.cjs",
+    "dist:win": "npm run build:icon && electron-builder --win nsis --publish never",
+    "build:icon": "node scripts/build-icon.cjs"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
+    "sharp": "^0.34.4",
+    "png-to-ico": "^3.0.1"
+  },
+  "build": {
+    "appId": "com.meowbuild.filecat",
+    "productName": "FileCat 文件整理猫",
+    "asar": true,
+    "files": [
+      "index.html",
+      "styles.css",
+      "app.js",
+      "electron/**/*",
+      "README.md",
+      "build/**/*"
+    ],
+    "directories": { "output": "dist" },
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "forceCodeSigning": false,
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FileCat 文件整理猫",
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    }
+  }
+}
