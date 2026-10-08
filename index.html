@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#171b22" />
+  <title>FileCat 文件整理猫</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-icon">🐈‍⬛</div><div><b>FileCat</b><span>文件整理猫 · 喵造实验室 009</span></div></div>
+      <div class="safety-badge">不删除 · 先预览 · 可撤销</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">LOCAL-FIRST FILE ORGANIZER</span>
+          <h1>受够了“最终版2最终版”？<br><em>让猫帮你收拾。</em></h1>
+          <p>FileCat 只整理你主动选择的文件夹。v0.1 不进入已有子文件夹、不永久删除文件，所有移动都先给你看，执行后还能一键撤销。</p>
+          <div class="hero-actions">
+            <button class="primary" id="chooseBtn">选择文件夹开始扫描</button>
+            <button class="ghost" id="undoBtn">撤销上一次整理</button>
+          </div>
+        </div>
+        <div class="cat-card">
+          <div class="hardhat">🟨</div>
+          <div class="cat">🐈‍⬛</div>
+          <div class="folder">📁</div>
+          <p>“你不是没有文件夹，<br>你是舍不得归档。”</p>
+        </div>
+      </section>
+
+      <section class="panel status-panel">
+        <div class="section-head"><div><small>STEP 01</small><h2>选择一个文件夹</h2></div><span id="folderBadge">尚未选择</span></div>
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">📂</div>
+          <b id="folderTitle">推荐先从「下载」或「桌面」开始</b>
+          <span>FileCat v0.1 只扫描当前目录的文件，不碰里面已有的文件夹。</span>
+        </div>
+      </section>
+
+      <section class="dashboard" id="dashboard" hidden>
+        <div class="stats-grid">
+          <article><small>当前层文件</small><strong id="statFiles">0</strong><span>个</span></article>
+          <article><small>总大小</small><strong id="statSize">0</strong><span></span></article>
+          <article><small>重复文件组</small><strong id="statDup">0</strong><span>组</span></article>
+          <article><small>“最终版”家族</small><strong id="statVersions">0</strong><span>组</span></article>
+        </div>
+
+        <section class="panel">
+          <div class="section-head"><div><small>STEP 02</small><h2>FileCat 的整理建议</h2></div><span>默认全部勾选，可修改</span></div>
+          <div id="categoryList" class="category-list"></div>
+        </section>
+
+        <div class="two-col">
+          <section class="panel">
+            <div class="section-head"><div><small>CHECK</small><h2>真正重复文件</h2></div><span>SHA-256</span></div>
+            <div id="duplicateList" class="finding-list"></div>
+          </section>
+          <section class="panel">
+            <div class="section-head"><div><small>CHECK</small><h2>疑似版本家族</h2></div><span>只提醒，不删除</span></div>
+            <div id="versionList" class="finding-list"></div>
+          </section>
+        </div>
+
+        <section class="panel plan-panel">
+          <div class="section-head"><div><small>STEP 03</small><h2>执行前预览</h2></div><span id="planCount">0 个文件</span></div>
+          <div class="plan-note">将创建 <b>FileCat_整理</b> 文件夹，再按类型放进 PDF / 文档 / 图片 / 视频等子目录。原有文件夹完全不动。</div>
+          <div id="planPreview" class="plan-preview"></div>
+          <button class="primary wide" id="executeBtn">确认整理这些文件</button>
+        </section>
+      </section>
+    </main>
+
+    <footer><b>FileCat 文件整理猫</b><span>AI 可以建议，最终移动权永远在人。</span></footer>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
