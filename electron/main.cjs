@@ -46,24 +46,37 @@ ipcMain.handle('filecat:choose-folder', async () => {
 
 ipcMain.handle('filecat:scan-folder', async (_event, folder) => {
   const listing = core.listTopLevel(folder);
-  const [duplicates] = await Promise.all([core.findDuplicates(listing.files)]);
+  const duplicates = await core.findDuplicates(listing.files);
   const versions = core.findVersionFamilies(listing.files);
-  const plan = core.buildPlan(folder, listing.files);
+  const smartPlan = core.buildPlan(folder, listing.files, 'smart');
+  const typePlan = core.buildPlan(folder, listing.files, 'type');
+  const insights = core.buildInsights(listing.files, duplicates, versions);
   const categories = {};
+  const typeCategories = {};
   let totalSize = 0;
+
   for (const file of listing.files) {
     totalSize += file.size;
-    categories[file.category] = (categories[file.category] || 0) + 1;
+    categories[file.smart.label] = (categories[file.smart.label] || 0) + 1;
+    typeCategories[file.category] = (typeCategories[file.category] || 0) + 1;
   }
+
+  const safeFiles = listing.files.map(({ textSample, ...file }) => file);
+
   return {
     folder,
-    ...listing,
+    files: safeFiles,
+    folders: listing.folders,
     duplicates,
     versions,
-    plan,
+    plan: smartPlan,
+    smartPlan,
+    typePlan,
+    insights,
     totalSize,
     totalSizeText: core.formatBytes(totalSize),
-    categories
+    categories,
+    typeCategories
   };
 });
 

@@ -42,5 +42,5 @@ jobs:
           if (gh release view $tag --repo "${{ github.repository }}" 2>$null) {
             gh release upload $tag $asset --clobber --repo "${{ github.repository }}"
           } else {
-            gh release create $tag $asset --repo "${{ github.repository }}" --target "${{ github.sha }}" --title "FileCat 文件整理猫 v$version" --notes "Windows x64 安装版。v0.1 只整理用户主动选择目录的当前层文件，不进入已有子目录、不永久删除，支持整理预览、重复检测与一键撤销。"
+            gh release create $tag $asset --repo "${{ github.repository }}" --target "${{ github.sha }}" --title "FileCat 文件整理猫 v$version" --notes "Windows x64 安装版。v0.2 新增智能用途分类、传统类型模式切换、旧文件/大文件/旧安装包提示；继续保留当前层扫描、整理预览、SHA-256 重复检测和一键撤销，不永久删除文件。"
           }
